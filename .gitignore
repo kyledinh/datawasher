@@ -1,0 +1,10 @@
+*~
+*.class
+*.log
+*.swp
+*.swo
+*.iml
+*.DS_store
+*.log
+
+.idea
