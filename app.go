@@ -20,6 +20,8 @@ func main() {
 	g.GET("/random_contact", v1.GetRandomContact)
 	g.GET("/contacts", v1.GetContacts)
 
+	g.POST("/json_contacts", v1.PostWashJsonContacts)
+
 	// SERVICES
 	log.Printf("... started ServeFile ...")
 	log.Printf("... serving %v on port %v ", cfg.APPNAME, cfg.HTTP_PORT)
