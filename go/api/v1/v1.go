@@ -7,7 +7,7 @@ import (
 	"github.com/kyledinh/datawasher/go/sys"
 	"encoding/json"
 	"fmt"
-	//"io/ioutil"
+	"io/ioutil"
 	"log"
 	"math/rand"
 	"time"
@@ -35,14 +35,14 @@ func GetContacts(c *gin.Context) {
 }
 
 func PostWashJsonContacts(c *gin.Context) {
-	//rawbody, err := ioutil.ReadAll(c.Request.Body)
-	rawbody := []byte(`[{"first_name":"Ann","last_name":"Perkins","email":"ann.perkins@primeconsulting.com","phone_number":"555-207-1944","street_address":"72 Street Rd","city":"Pawnee","state":"IN"},{"first_name":"Donna","last_name":"Meagle","email":"donna.meagle@boeing.com","phone_number":"555-595-7884","street_address":"21 Street Rd","city":"Pawnee","state":"IN"}]`)
-	// if err != nil {
-	// 	c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
-	// 	return
-	// }
-	fmt.Printf("raw: [% s]\n", string(rawbody[:]))
+	rawbody, err := ioutil.ReadAll(c.Request.Body)
+	//rawbody := []byte(`[{"first_name":"Ann","last_name":"Perkins","email":"ann.perkins@primeconsulting.com","phone_number":"555-207-1944","street_address":"72 Street Rd","city":"Pawnee","state":"IN"},{"first_name":"Donna","last_name":"Meagle","email":"donna.meagle@boeing.com","phone_number":"555-595-7884","street_address":"21 Street Rd","city":"Pawnee","state":"IN"}]`)
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
+		return
+	}
+	fmt.Printf("raw: % s \n", string(rawbody[:]))
 	var arr []model.Contact
 	json.Unmarshal(rawbody, &arr)
-	c.JSON(200, arr[1])
+	c.JSON(200, arr)
 }
