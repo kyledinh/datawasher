@@ -17,7 +17,7 @@ func main() {
 	// ROUTES
 	g := gin.Default()
 	g.GET("/", v1.UsageJson)
-	g.GET("/washjson", v1.GetWashJson)
+	g.GET("/random_contact", v1.GetRandomContact)
 	g.GET("/contacts", v1.GetContacts)
 
 	// SERVICES

@@ -46,9 +46,10 @@ func Setup() {
 			c.First_name	= line[0]
 			c.Last_name = line[1]
 			c.Email = line[2]
-			c.Street_address = line[3]
-			c.City	= line[4]
-			c.State = line[5]
+			c.Phone_number = line[3]
+			c.Street_address = line[4]
+			c.City	= line[5]
+			c.State = line[6]
 
 			contacts = append(contacts, c)
 		}

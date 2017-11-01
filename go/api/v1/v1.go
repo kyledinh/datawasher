@@ -5,6 +5,8 @@ import (
 	"github.com/kyledinh/datawasher/go/datastore"
 	"github.com/kyledinh/datawasher/go/sys"
 	"log"
+	"math/rand"
+	"time"
 )
 
 func NotAvailableJson(c *gin.Context) {
@@ -15,13 +17,15 @@ func UsageJson(c *gin.Context) {
 	c.JSON(200, gin.H{"routes":"/washjson/"})
 }
 
-func GetWashJson(c *gin.Context) {
-	c.JSON(200, gin.H{"name_first":"Bob", "last_name":"Lackey"})
+func GetRandomContact(c *gin.Context) {
+	rand.Seed(time.Now().Unix())
+	i := rand.Intn(len(datastore.Contacts))
+	contact := datastore.Contacts[i]
+	c.JSON(200, contact)
 }
 
 func GetContacts(c *gin.Context) {
 	arr := datastore.Contacts
 	log.Printf("... size of array object:  %v  ", len(arr))
 	c.JSON(200, arr)
-
 }
