@@ -3,14 +3,25 @@ package datastore
 import (
 	"bufio"
 	"encoding/csv"
+	//"fmt"
 	"io"
 	"log"
+	"math/rand"
 	"os"
+	"time"
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/cfg"
 )
 
 var Contacts []model.Contact
+var FirstNames []string
+
+func RandFirstName () string {
+	timeseed := time.Now().UnixNano()
+	rand.Seed(timeseed)
+	i := rand.Intn(len(FirstNames))
+	return FirstNames[i]
+}
 
 func GetTest (num int) ([]model.Contact) {
 	if (num > len(Contacts)) {
@@ -58,4 +69,18 @@ func Setup() {
 	Contacts = contacts
 	log.Printf("... slurped CSV File with %v entries ...", count)
 	log.Printf("... number of records in Contacts %v", len(Contacts))
+
+	file, err := os.Open("first-names.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		FirstNames = append(FirstNames, scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
 }

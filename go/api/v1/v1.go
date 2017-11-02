@@ -44,5 +44,10 @@ func PostWashJsonContacts(c *gin.Context) {
 	fmt.Printf("raw: % s \n", string(rawbody[:]))
 	var arr []model.Contact
 	json.Unmarshal(rawbody, &arr)
+
+	for index := range arr {
+		fmt.Println(index)
+		arr[index].First_name = datastore.RandFirstName()
+	}
 	c.JSON(200, arr)
 }
