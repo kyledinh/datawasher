@@ -26,10 +26,16 @@ http://localhost:8000/contacts
 ### POST endpoints
 This endpoint will transform POST a JSON payload of contacts and return the same payload with transformed first_names.
 
-See `testing/post-upload-contacts.sh` for a curl command to test the endpoint.
 ```
 http://localhost:8000/json_contacts
 ```
+
+See `testing/post-upload-contacts.sh` for a curl command to test the endpoint.
+
+<img src="https://raw.github.com/kyledinh/datawasher/master/assets/contacts.json.png" width="600" />
+
+After datawashing
+<img src="https://raw.github.com/kyledinh/datawasher/master/assets/washed.contacts.png" width="600" />
 
 ## Development
 
