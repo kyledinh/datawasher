@@ -15,6 +15,7 @@ import (
 var Contacts []model.Contact
 var FirstNames []string
 var LastNames []string
+var EmailDomains []string
 
 func RandFirstName () string {
 	timeseed := time.Now().UnixNano()
@@ -28,6 +29,11 @@ func RandLastName () string {
 	rand.Seed(timeseed)
 	i := rand.Intn(len(LastNames))
 	return LastNames[i]
+}
+
+func MakeEmailAddress (first, last string) string {
+	i := rand.Intn(len(EmailDomains))
+	return first + "." + last + "@" + EmailDomains[i]
 }
 
 func GetTest (num int) ([]model.Contact) {
@@ -79,5 +85,6 @@ func Setup() {
 
 	FirstNames = importFirstNames()
 	LastNames = importLastNames()
+	EmailDomains = importEmailDomains()
 
 }

@@ -47,6 +47,7 @@ func PostWashJsonContacts(c *gin.Context) {
 	for index := range arr {
 		arr[index].First_name = datastore.RandFirstName()
 		arr[index].Last_name = datastore.RandLastName()
+		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
 	}
 	c.JSON(200, arr)
 }
