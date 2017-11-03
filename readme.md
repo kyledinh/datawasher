@@ -41,7 +41,7 @@ After datawashing
 | Docker Dev Container                        |
 |---------------------------------------------|
 | `docker pull kyledinh/devlinux`             |
-| `docker/launch-dev-container`               |
+| `docker/launch-dev-container.sh`            |
 
 You will need to customize `docker/launch-dev-container` for where you place your source code and $GOPATH on your host:
 * -v `/Users/kyle/src`:/opt/src

@@ -10,7 +10,7 @@ import (
 var APPNAME string = "appname"
 var HTTP_PORT string = "8000"
 var SERVER string = "0.0.0.0"
-var CSV_FILE string = "data.csv"
+var CSV_FILE string = "data/contacts.csv"
 
 var conf JsonCfg
 

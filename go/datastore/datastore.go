@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strings"
 	"time"
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/cfg"
@@ -32,8 +33,23 @@ func RandLastName () string {
 }
 
 func MakeEmailAddress (first, last string) string {
+	user := "user"
+	first = strings.ToLower(first)
+	last = strings.ToLower(last)
 	i := rand.Intn(len(EmailDomains))
-	return first + "." + last + "@" + EmailDomains[i]
+
+	switch rand.Intn(4) {
+	case 0:
+		user = first + last
+	case 1:
+		user = first[:1] + last
+	case 2:
+		user = first + last[:1]
+	default:
+		user = first + "." + last
+	}
+
+	return user + "@" + EmailDomains[i]
 }
 
 func GetTest (num int) ([]model.Contact) {
