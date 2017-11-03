@@ -6,7 +6,6 @@ import (
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/sys"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -41,13 +40,13 @@ func PostWashJsonContacts(c *gin.Context) {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
 		return
 	}
-	fmt.Printf("raw: % s \n", string(rawbody[:]))
+	//log.Printf("raw: % s \n", string(rawbody[:]))
 	var arr []model.Contact
 	json.Unmarshal(rawbody, &arr)
 
 	for index := range arr {
-		fmt.Println(index)
 		arr[index].First_name = datastore.RandFirstName()
+		arr[index].Last_name = datastore.RandLastName()
 	}
 	c.JSON(200, arr)
 }

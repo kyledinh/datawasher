@@ -1,6 +1,11 @@
 ## Project
 > This project illustrates the use of Docker with Go to build a RESTful service to transform data. It provides a service through a simple container.
 
+#### Technologies used
+* Docker - https://www.docker.com/
+* Go - https://golang.org/
+* Gin Go Webserver - https://github.com/gin-gonic/gin
+
 ## Running the Docker container
 In the `dist-linux` folder, there is the `datawasherLinux` server and support config and test files. To run this service as a container, just use:
 
@@ -9,7 +14,7 @@ In the `docker` folder.
 linux-docker-build.sh
 linux-docker-up.sh
 ```
-## Using the datawasher service
+## Using the datawasher services
 
 ### GET endpoints
 These endpoints will return JSON objects
@@ -28,11 +33,19 @@ http://localhost:8000/json_contacts
 
 ## Development
 
-| Docker Dev Environment                      |
+| Docker Dev Container                        |
 |---------------------------------------------|
 | `docker pull kyledinh/devlinux`             |
-| `docker run -it --rm -v /Users/kyle/src:/opt/src -e GOPATH=/opt kyledinh/devlinux bash` |
+| `docker/launch-dev-container`               |
+
+You will need to customize `docker/launch-dev-container` for where you place your source code and $GOPATH on your host:
+* -v `/Users/kyle/src`:/opt/src
+* -w "/opt/src/github.com/kyledinh/datawasher"
 
 The `$GOPATH` is set to `/opt`. I would attach my host's GOPATH to this directory and set a volume to `/opt/src`.
 
 * `kyledinh/devlinux` is built from this repo: https://github.com/kyledinh/docker/tree/master/images
+
+### Dev Resources
+* dataset sources - http://mbejda.github.io/
+* http://www.outpost9.com/files/WordLists.html

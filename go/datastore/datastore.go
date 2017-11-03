@@ -3,7 +3,6 @@ package datastore
 import (
 	"bufio"
 	"encoding/csv"
-	//"fmt"
 	"io"
 	"log"
 	"math/rand"
@@ -15,12 +14,20 @@ import (
 
 var Contacts []model.Contact
 var FirstNames []string
+var LastNames []string
 
 func RandFirstName () string {
 	timeseed := time.Now().UnixNano()
 	rand.Seed(timeseed)
 	i := rand.Intn(len(FirstNames))
 	return FirstNames[i]
+}
+
+func RandLastName () string {
+	timeseed := time.Now().UnixNano()
+	rand.Seed(timeseed)
+	i := rand.Intn(len(LastNames))
+	return LastNames[i]
 }
 
 func GetTest (num int) ([]model.Contact) {
@@ -70,17 +77,7 @@ func Setup() {
 	log.Printf("... slurped CSV File with %v entries ...", count)
 	log.Printf("... number of records in Contacts %v", len(Contacts))
 
-	file, err := os.Open("first-names.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+	FirstNames = importFirstNames()
+	LastNames = importLastNames()
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		FirstNames = append(FirstNames, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
 }

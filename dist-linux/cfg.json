@@ -3,5 +3,5 @@
    "appversion" :  "0.0.1",
    "http_port" : "8000",
    "server" : "0.0.0.0",
-   "csv_file" : "contacts.csv"
+   "csv_file" : "data/contacts.csv"
 }
