@@ -31,11 +31,10 @@ http://localhost:8000/json_contacts
 ```
 
 See `testing/post-upload-contacts.sh` for a curl command to test the endpoint.
-
-<img src="https://raw.github.com/kyledinh/datawasher/master/assets/contacts.json.png" width="600" />
+<img src="https://raw.github.com/kyledinh/datawasher/master/assets/contact.json.png" width="800" />
 
 After datawashing
-<img src="https://raw.github.com/kyledinh/datawasher/master/assets/washed.contacts.png" width="600" />
+<img src="https://raw.github.com/kyledinh/datawasher/master/assets/washed.contacts.png" width="800" />
 
 ## Development
 
