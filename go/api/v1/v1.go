@@ -1,6 +1,8 @@
 package v1
 
 import (
+	//"github.com/bitly/go-simplejson"
+	"github.com/bitly/go-simplejson"
 	"github.com/gin-gonic/gin"
 	"github.com/kyledinh/datawasher/go/datastore"
 	"github.com/kyledinh/datawasher/go/model"
@@ -35,7 +37,6 @@ func GetContacts(c *gin.Context) {
 
 func PostWashJsonContacts(c *gin.Context) {
 	rawbody, err := ioutil.ReadAll(c.Request.Body)
-	//rawbody := []byte(`[{"first_name":"Ann","last_name":"Perkins","email":"ann.perkins@primeconsulting.com","phone_number":"555-207-1944","street_address":"72 Street Rd","city":"Pawnee","state":"IN"},{"first_name":"Donna","last_name":"Meagle","email":"donna.meagle@boeing.com","phone_number":"555-595-7884","street_address":"21 Street Rd","city":"Pawnee","state":"IN"}]`)
 	if err != nil {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
 		return
@@ -50,4 +51,16 @@ func PostWashJsonContacts(c *gin.Context) {
 		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
 	}
 	c.JSON(200, arr)
+}
+
+func PostWasher(c *gin.Context) {
+	rawbody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
+		return
+	}
+	_, err = simplejson.NewJson(rawbody)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
