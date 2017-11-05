@@ -1,12 +1,12 @@
 package v1
 
 import (
-	//"github.com/bitly/go-simplejson"
 	"github.com/bitly/go-simplejson"
 	"github.com/gin-gonic/gin"
 	"github.com/kyledinh/datawasher/go/datastore"
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/sys"
+	"github.com/kyledinh/datawasher/go/util"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -59,8 +59,24 @@ func PostWasher(c *gin.Context) {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
 		return
 	}
-	_, err = simplejson.NewJson(rawbody)
+	rawbody = util.WrapJsonAsRoot(rawbody)
+	log.Printf("IsRawbodyArray: % s \n", string(rawbody[:]))
+
+	sj, err := simplejson.NewJson(rawbody)
 	if err != nil {
 		log.Fatalln(err)
 	}
+	root := sj.Get("root")
+	for i, _ := range root.MustArray() {
+		fn := datastore.RandFirstName()
+		ln := datastore.RandLastName()
+        root.GetIndex(i).Set("first_name", fn)
+		root.GetIndex(i).Set("last_name", ln)
+		root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
+    }
+
+	arr := root.MustArray()
+	//log.Printf("... size of root array:  %v  ", len(arr))
+
+	c.JSON(200, arr)
 }
