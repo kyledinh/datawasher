@@ -58,6 +58,8 @@ func PostWasher(c *gin.Context) {
 	// task from query string
 	log.Printf("c.Request.URL: %v", c.Request.URL)
 	tasks := task.GetTasksFromURL(c.Request.URL)
+	settings := task.SetWasherSettings(tasks)
+
 	if tasks == nil {}
 
 	// json payload
@@ -81,9 +83,12 @@ func PostWasher(c *gin.Context) {
 		for _, t := range tasks {
 			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
 		}
+		if settings.Email != "" {
+			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
+			ln, _ := root.GetIndex(i).Get(settings.Last_name).String()
+			root.GetIndex(i).Set(settings.Email, datastore.MakeEmailAddress(fn, ln))
+		}
 	}
-
-	// 	TODO: root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
 
 	arr := root.MustArray()
 	//log.Printf("... size of root array:  %v  ", len(arr))

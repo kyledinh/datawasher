@@ -11,8 +11,15 @@ type Task struct {
     Action string
 }
 
+type Setting struct {
+    First_name string
+    Last_name string
+    Email string
+}
+
 const RAND_FIRST_NAME = "MOX_RFN"
 const RAND_LAST_NAME = "MOX_RLN"
+const MOX_EMAIL = "MOX_EMAIL"
 const RAND_FIRST_NAME_ESP = "MOX_RFN_ESP"
 const RAND_LAST_NAME_ESP = "MOX_RLN_ESP"
 const LIMIT = "limit"
@@ -27,7 +34,6 @@ func SupportedAction(field, action string) bool {
 func GetTasksFromURL(u *url.URL) []Task {
 
     var fields []Task
-
     m := u.Query()
     for k, v := range m {
         log.Printf(" k: %v v: %v  ", k, v)
@@ -49,4 +55,14 @@ func ProcessAction(action string, str string) string {
         str = datastore.RandLastName()
     }
     return str
+}
+
+func SetWasherSettings(tasks []Task) Setting {
+    var setting Setting
+    for _, t := range tasks {
+        if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
+        if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
+        if t.Action == MOX_EMAIL { setting.Email = t.Field }
+    }
+    return setting
 }
