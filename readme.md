@@ -56,3 +56,4 @@ The `$GOPATH` is set to `/opt`. I would attach my host's GOPATH to this director
 * http://www.outpost9.com/files/WordLists.html
 * https://godoc.org/github.com/bitly/go-simplejson#Json.Encode
 * https://gobyexample.com/json
+* https://gin-gonic.github.io/gin/

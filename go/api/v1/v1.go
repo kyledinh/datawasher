@@ -6,6 +6,7 @@ import (
 	"github.com/kyledinh/datawasher/go/datastore"
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/sys"
+	"github.com/kyledinh/datawasher/go/task"
 	"github.com/kyledinh/datawasher/go/util"
 	"encoding/json"
 	"io/ioutil"
@@ -54,6 +55,12 @@ func PostWashJsonContacts(c *gin.Context) {
 }
 
 func PostWasher(c *gin.Context) {
+	// task from query string
+	log.Printf("c.Request.URL: %v", c.Request.URL)
+	tasks := task.GetTasksFromURL(c.Request.URL)
+	if tasks == nil {}
+
+	// json payload
 	rawbody, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
@@ -64,16 +71,19 @@ func PostWasher(c *gin.Context) {
 
 	sj, err := simplejson.NewJson(rawbody)
 	if err != nil {
-		log.Fatalln(err)
+		c.JSON(400, gin.H{"message": sys.ERR_UNMARSHAL_BODY, "status": sys.FAIL})
+		return
 	}
+
+	// process json payload with tasks packed in query string
 	root := sj.Get("root")
 	for i, _ := range root.MustArray() {
-		fn := datastore.RandFirstName()
-		ln := datastore.RandLastName()
-        root.GetIndex(i).Set("first_name", fn)
-		root.GetIndex(i).Set("last_name", ln)
-		root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
-    }
+		for _, t := range tasks {
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
+		}
+	}
+
+	// 	TODO: root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
 
 	arr := root.MustArray()
 	//log.Printf("... size of root array:  %v  ", len(arr))
