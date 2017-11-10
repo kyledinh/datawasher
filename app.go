@@ -21,6 +21,7 @@ func main() {
 	g.GET("/contacts", v1.GetContacts)
 
 	g.POST("/json_contacts", v1.PostWashJsonContacts)
+	g.POST("/washer", v1.PostWasher)
 
 	// SERVICES
 	log.Printf("... started ServeFile ...")

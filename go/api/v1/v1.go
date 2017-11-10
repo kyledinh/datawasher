@@ -1,10 +1,13 @@
 package v1
 
 import (
+	"github.com/bitly/go-simplejson"
 	"github.com/gin-gonic/gin"
 	"github.com/kyledinh/datawasher/go/datastore"
 	"github.com/kyledinh/datawasher/go/model"
 	"github.com/kyledinh/datawasher/go/sys"
+	"github.com/kyledinh/datawasher/go/task"
+	"github.com/kyledinh/datawasher/go/util"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -35,7 +38,6 @@ func GetContacts(c *gin.Context) {
 
 func PostWashJsonContacts(c *gin.Context) {
 	rawbody, err := ioutil.ReadAll(c.Request.Body)
-	//rawbody := []byte(`[{"first_name":"Ann","last_name":"Perkins","email":"ann.perkins@primeconsulting.com","phone_number":"555-207-1944","street_address":"72 Street Rd","city":"Pawnee","state":"IN"},{"first_name":"Donna","last_name":"Meagle","email":"donna.meagle@boeing.com","phone_number":"555-595-7884","street_address":"21 Street Rd","city":"Pawnee","state":"IN"}]`)
 	if err != nil {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
 		return
@@ -49,5 +51,42 @@ func PostWashJsonContacts(c *gin.Context) {
 		arr[index].Last_name = datastore.RandLastName()
 		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
 	}
+	c.JSON(200, arr)
+}
+
+func PostWasher(c *gin.Context) {
+	// task from query string
+	log.Printf("c.Request.URL: %v", c.Request.URL)
+	tasks := task.GetTasksFromURL(c.Request.URL)
+	if tasks == nil {}
+
+	// json payload
+	rawbody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
+		return
+	}
+	rawbody = util.WrapJsonAsRoot(rawbody)
+	log.Printf("IsRawbodyArray: % s \n", string(rawbody[:]))
+
+	sj, err := simplejson.NewJson(rawbody)
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_UNMARSHAL_BODY, "status": sys.FAIL})
+		return
+	}
+
+	// process json payload with tasks packed in query string
+	root := sj.Get("root")
+	for i, _ := range root.MustArray() {
+		for _, t := range tasks {
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
+		}
+	}
+
+	// 	TODO: root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
+
+	arr := root.MustArray()
+	//log.Printf("... size of root array:  %v  ", len(arr))
+
 	c.JSON(200, arr)
 }
