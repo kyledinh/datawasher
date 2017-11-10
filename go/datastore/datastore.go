@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 	"github.com/kyledinh/datawasher/go/model"
@@ -17,6 +18,9 @@ var Contacts []model.Contact
 var FirstNames []string
 var LastNames []string
 var EmailDomains []string
+var States []string
+var StreetNames []string
+var StreetTypes []string
 
 func RandFirstName () string {
 	timeseed := time.Now().UnixNano()
@@ -63,6 +67,22 @@ func GetTest (num int) ([]model.Contact) {
 	return arr
 }
 
+func RandState() string {
+	i := rand.Intn(len(States))
+	return States[i]
+}
+
+func streetNumber() string {
+	i := rand.Intn(3000)
+	return strconv.Itoa(i)
+}
+
+func RandStreetAddress() string {
+	i := rand.Intn(len(StreetNames))
+	j := rand.Intn(len(StreetTypes))
+	return streetNumber() + " " + StreetNames[i] + " " + StreetTypes[j]
+}
+
 func Setup() {
 	csvFile, _ := os.Open(cfg.CSV_FILE)
 	reader := csv.NewReader(bufio.NewReader(csvFile))
@@ -102,5 +122,7 @@ func Setup() {
 	FirstNames = importFirstNames()
 	LastNames = importLastNames()
 	EmailDomains = importEmailDomains()
-
+	States = importStates()
+	StreetNames = importStreetNames()
+	StreetTypes = importStreetTypes()
 }

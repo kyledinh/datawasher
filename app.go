@@ -5,12 +5,14 @@ import (
 	"github.com/kyledinh/datawasher/go/api/v1"
 	"github.com/kyledinh/datawasher/go/cfg"
 	"github.com/kyledinh/datawasher/go/datastore"
+	"github.com/kyledinh/datawasher/go/task"
 	"log"
 )
 
 func main() {
 	// SETUP
 	cfg.Setup("cfg.json")
+	task.Setup()
 	datastore.Setup()
 	portOption := ":" + cfg.HTTP_PORT
 

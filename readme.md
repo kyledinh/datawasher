@@ -5,6 +5,7 @@
 * Docker - https://www.docker.com/
 * Go - https://golang.org/
 * Gin Go Webserver - https://github.com/gin-gonic/gin
+* Go-SimpleJson - https://github.com/bitly/go-simplejson
 
 ## Running the Docker container
 In the `dist-linux` folder, there is the `datawasherLinux` server and support config and test files. To run this service as a container, just use:
@@ -35,6 +36,21 @@ See `testing/post-upload-contacts.sh` for a curl command to test the endpoint.
 
 After datawashing
 <img src="https://raw.github.com/kyledinh/datawasher/master/assets/washed.contacts.png" width="800" />
+
+```
+http://localhost:8000/washer?last_name=MOX_RLN&first_name=MOX_RFN&email=MOX_EMAIL
+```
+See `testing/post-washer.sh` for a curl command to test the endpoint. This endpoint allows you to describe the fields used in your json payload. In the query string you can map your fields to presets of "washer" functions.
+
+| Washer Presets | |
+|----------------|-|
+| MOX_RFN        | Transforms with a random first name |
+| MOX_RLN        | Transforms with a random last name  |
+| MOX_EMAIL      | Used with MOX_RFN and MOX_RLN to generate an email address |
+| MOX_RSA        | Random street address like: 123 Elm Street |
+| MOX_RSC        | Random state code of 50 US states, ie: CA |
+| MOX_RP555      | Random phone number with `555`|
+
 
 ## Development
 
