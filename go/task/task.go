@@ -4,6 +4,7 @@ import (
     "github.com/kyledinh/datawasher/go/datastore"
     "log"
     "net/url"
+    "strconv"
 )
 
 type Task struct {
@@ -15,14 +16,14 @@ type Setting struct {
     First_name string
     Last_name string
     Email string
+    Limit int
 }
 
 const RAND_FIRST_NAME = "MOX_RFN"
 const RAND_LAST_NAME = "MOX_RLN"
 const MOX_EMAIL = "MOX_EMAIL"
 const RAND_STREET_ADDR = "MOX_RSA"
-const RAND_FIRST_NAME_ESP = "MOX_RFN_ESP"
-const RAND_LAST_NAME_ESP = "MOX_RLN_ESP"
+
 const LIMIT = "limit"
 
 var SupportedActions map[string]string
@@ -64,10 +65,18 @@ func ProcessAction(action string, str string) string {
 
 func SetWasherSettings(tasks []Task) Setting {
     var setting Setting
+    setting.Limit = 10
     for _, t := range tasks {
         if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
         if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
         if t.Action == MOX_EMAIL { setting.Email = t.Field }
+        if t.Field == LIMIT {
+            limit, err := strconv.Atoi(t.Action)
+            if err != nil {
+                limit = 10
+            }
+            setting.Limit = limit
+        }
     }
     return setting
 }

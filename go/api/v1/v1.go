@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"math/rand"
+	//"strconv"
 	"time"
 )
 
@@ -33,6 +34,51 @@ func GetRandomContact(c *gin.Context) {
 func GetContacts(c *gin.Context) {
 	arr := datastore.Contacts
 	log.Printf("... size of array object:  %v  ", len(arr))
+	c.JSON(200, arr)
+}
+
+func GetCreate(c *gin.Context) {
+	tasks := task.GetTasksFromURL(c.Request.URL)
+	settings := task.SetWasherSettings(tasks)
+
+	raw := `{ "root" : [`
+	for i := 0; i < settings.Limit; i++ {
+		raw = raw + `{ `
+		for j := 0; j < len(tasks); j++ {
+			raw = raw + `"` + tasks[j].Field + `" : "abc"`
+			if j+1 < len(tasks) {
+				raw = raw + ", "
+			}
+		}
+		raw = raw + ` }`
+
+		if  i+1 < settings.Limit {
+			raw = raw + ","
+		}
+	}
+	raw = raw + `] }`
+
+	sj, err := simplejson.NewJson([]byte(raw))
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
+		return
+	}
+	root := sj.Get("root")
+
+	log.Printf("%v", root)
+	log.Printf("limit %v", settings.Limit)
+
+	for i := 0; i < settings.Limit; i++ {
+		this, _ := root.GetIndex(i).Get("first_name").String()
+		log.Printf("trying %v %v",i ,this)
+
+		fn := datastore.RandFirstName()
+		ln := datastore.RandLastName()
+		root.GetIndex(i).Set("first_name", fn)
+		root.GetIndex(i).Set("last_name", ln)
+	}
+
+	arr := root.MustArray()
 	c.JSON(200, arr)
 }
 
@@ -59,8 +105,6 @@ func PostWasher(c *gin.Context) {
 	log.Printf("c.Request.URL: %v", c.Request.URL)
 	tasks := task.GetTasksFromURL(c.Request.URL)
 	settings := task.SetWasherSettings(tasks)
-
-	if tasks == nil {}
 
 	// json payload
 	rawbody, err := ioutil.ReadAll(c.Request.Body)

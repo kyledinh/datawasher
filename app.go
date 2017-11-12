@@ -21,6 +21,7 @@ func main() {
 	g.GET("/", v1.UsageJson)
 	g.GET("/random_contact", v1.GetRandomContact)
 	g.GET("/contacts", v1.GetContacts)
+	g.GET("/create", v1.GetCreate)
 
 	g.POST("/json_contacts", v1.PostWashJsonContacts)
 	g.POST("/washer", v1.PostWasher)
