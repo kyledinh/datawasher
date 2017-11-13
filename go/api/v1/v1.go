@@ -38,20 +38,14 @@ func GetContacts(c *gin.Context) {
 }
 
 func GetCreate(c *gin.Context) {
-	tasks := task.GetTasksFromURL(c.Request.URL)
-	settings := task.SetWasherSettings(tasks)
+	tasks, settings := task.GetTasksAndSettings(c.Request.URL)
+	if tasks != nil {
+
+	}
 
 	raw := `{ "root" : [`
 	for i := 0; i < settings.Limit; i++ {
-		raw = raw + `{ `
-		for j := 0; j < len(tasks); j++ {
-			raw = raw + `"` + tasks[j].Field + `" : "abc"`
-			if j+1 < len(tasks) {
-				raw = raw + ", "
-			}
-		}
-		raw = raw + ` }`
-
+		raw = raw + `{ }`
 		if  i+1 < settings.Limit {
 			raw = raw + ","
 		}
@@ -65,7 +59,7 @@ func GetCreate(c *gin.Context) {
 	}
 	root := sj.Get("root")
 
-	log.Printf("%v", root)
+	//log.Printf("%v", root)
 	log.Printf("limit %v", settings.Limit)
 
 	for i := 0; i < settings.Limit; i++ {
@@ -76,6 +70,7 @@ func GetCreate(c *gin.Context) {
 		ln := datastore.RandLastName()
 		root.GetIndex(i).Set("first_name", fn)
 		root.GetIndex(i).Set("last_name", ln)
+		root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
 	}
 
 	arr := root.MustArray()
@@ -103,8 +98,7 @@ func PostWashJsonContacts(c *gin.Context) {
 func PostWasher(c *gin.Context) {
 	// task from query string
 	log.Printf("c.Request.URL: %v", c.Request.URL)
-	tasks := task.GetTasksFromURL(c.Request.URL)
-	settings := task.SetWasherSettings(tasks)
+	tasks, settings := task.GetTasksAndSettings(c.Request.URL)
 
 	// json payload
 	rawbody, err := ioutil.ReadAll(c.Request.Body)

@@ -23,7 +23,6 @@ const RAND_FIRST_NAME = "MOX_RFN"
 const RAND_LAST_NAME = "MOX_RLN"
 const MOX_EMAIL = "MOX_EMAIL"
 const RAND_STREET_ADDR = "MOX_RSA"
-
 const LIMIT = "limit"
 
 var SupportedActions map[string]string
@@ -35,20 +34,34 @@ func SupportedAction(field, action string) bool {
     return false
 }
 
-func GetTasksFromURL(u *url.URL) []Task {
+func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
+    var tasks []Task
+    var setting Setting
+    setting.Limit = 10
 
-    var fields []Task
     m := u.Query()
     for k, v := range m {
         log.Printf(" k: %v v: %v  ", k, v)
 
         if SupportedAction(k, v[0]) {
             task := Task{k, v[0]}
-            fields = append(fields, task)
+            tasks = append(tasks, task)
         }
 	}
-    //log.Printf("... size of tasks[] array:  %v  ", len(fields))
-    return fields
+
+    limit, err := strconv.Atoi(m.Get(LIMIT))
+    if err != nil {
+        limit = 10
+    }
+    setting.Limit = limit
+
+    for _, t := range tasks {
+        if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
+        if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
+        if t.Action == MOX_EMAIL { setting.Email = t.Field }
+
+    }
+    return tasks, setting
 }
 
 func ProcessAction(action string, str string) string {
@@ -61,24 +74,6 @@ func ProcessAction(action string, str string) string {
         str = datastore.RandStreetAddress()
     }
     return str
-}
-
-func SetWasherSettings(tasks []Task) Setting {
-    var setting Setting
-    setting.Limit = 10
-    for _, t := range tasks {
-        if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
-        if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
-        if t.Action == MOX_EMAIL { setting.Email = t.Field }
-        if t.Field == LIMIT {
-            limit, err := strconv.Atoi(t.Action)
-            if err != nil {
-                limit = 10
-            }
-            setting.Limit = limit
-        }
-    }
-    return setting
 }
 
 func Setup() {
