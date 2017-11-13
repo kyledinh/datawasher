@@ -47,19 +47,18 @@ func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
             task := Task{k, v[0]}
             tasks = append(tasks, task)
         }
+        if k == LIMIT {
+            limit, err := strconv.Atoi(v[0])
+            if err == nil {
+                setting.Limit = limit
+            }
+        }
 	}
-
-    limit, err := strconv.Atoi(m.Get(LIMIT))
-    if err != nil {
-        limit = 10
-    }
-    setting.Limit = limit
 
     for _, t := range tasks {
         if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
         if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
         if t.Action == MOX_EMAIL { setting.Email = t.Field }
-
     }
     return tasks, setting
 }

@@ -39,9 +39,6 @@ func GetContacts(c *gin.Context) {
 
 func GetCreate(c *gin.Context) {
 	tasks, settings := task.GetTasksAndSettings(c.Request.URL)
-	if tasks != nil {
-
-	}
 
 	raw := `{ "root" : [`
 	for i := 0; i < settings.Limit; i++ {
@@ -58,40 +55,20 @@ func GetCreate(c *gin.Context) {
 		return
 	}
 	root := sj.Get("root")
-
-	//log.Printf("%v", root)
 	log.Printf("limit %v", settings.Limit)
 
 	for i := 0; i < settings.Limit; i++ {
-		this, _ := root.GetIndex(i).Get("first_name").String()
-		log.Printf("trying %v %v",i ,this)
-
-		fn := datastore.RandFirstName()
-		ln := datastore.RandLastName()
-		root.GetIndex(i).Set("first_name", fn)
-		root.GetIndex(i).Set("last_name", ln)
-		root.GetIndex(i).Set("email", datastore.MakeEmailAddress(fn, ln))
+		for _, t := range tasks {
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
+		}
+		if settings.Email != "" {
+			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
+			ln, _ := root.GetIndex(i).Get(settings.Last_name).String()
+			root.GetIndex(i).Set(settings.Email, datastore.MakeEmailAddress(fn, ln))
+		}
 	}
 
 	arr := root.MustArray()
-	c.JSON(200, arr)
-}
-
-func PostWashJsonContacts(c *gin.Context) {
-	rawbody, err := ioutil.ReadAll(c.Request.Body)
-	if err != nil {
-		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
-		return
-	}
-	//log.Printf("raw: % s \n", string(rawbody[:]))
-	var arr []model.Contact
-	json.Unmarshal(rawbody, &arr)
-
-	for index := range arr {
-		arr[index].First_name = datastore.RandFirstName()
-		arr[index].Last_name = datastore.RandLastName()
-		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
-	}
 	c.JSON(200, arr)
 }
 
@@ -131,5 +108,25 @@ func PostWasher(c *gin.Context) {
 	arr := root.MustArray()
 	//log.Printf("... size of root array:  %v  ", len(arr))
 
+	c.JSON(200, arr)
+}
+
+// This function works with a pre-definded json struct (model.Contact)
+// TODO: deprecate when PostWasher() is more filled out
+func PostWashJsonContacts(c *gin.Context) {
+	rawbody, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
+		return
+	}
+	//log.Printf("raw: % s \n", string(rawbody[:]))
+	var arr []model.Contact
+	json.Unmarshal(rawbody, &arr)
+
+	for index := range arr {
+		arr[index].First_name = datastore.RandFirstName()
+		arr[index].Last_name = datastore.RandLastName()
+		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
+	}
 	c.JSON(200, arr)
 }
