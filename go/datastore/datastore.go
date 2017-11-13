@@ -52,7 +52,8 @@ func MakeEmailAddress (first, last string) string {
 	default:
 		user = first + "." + last
 	}
-
+	user = strings.Replace(user, " ", "", -1)
+	user = strings.Replace(user, "'", "", -1)
 	return user + "@" + EmailDomains[i]
 }
 
@@ -71,7 +72,7 @@ func RandInt(limit int) int {
 	return rand.Intn(limit)
 }
 
-func RandState() string {
+func RandStateCode() string {
 	i := rand.Intn(len(States))
 	return States[i]
 }

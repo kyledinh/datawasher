@@ -39,21 +39,13 @@ func GetContacts(c *gin.Context) {
 
 func GetCreate(c *gin.Context) {
 	tasks, settings := task.GetTasksAndSettings(c.Request.URL)
-
-	raw := `{ "root" : [`
-	for i := 0; i < settings.Limit; i++ {
-		raw += `{ }`
-		if  i+1 < settings.Limit {
-			raw += `,`
-		}
-	}
-	raw += `] }`
-
+	raw := util.CreateEmptyRootJsonArray(settings.Limit)
 	sj, err := simplejson.NewJson([]byte(raw))
 	if err != nil {
 		c.JSON(400, gin.H{"message": sys.ERR_READ_BODY, "status": sys.FAIL})
 		return
 	}
+
 	root := sj.Get("root")
 	log.Printf("limit %v", settings.Limit)
 

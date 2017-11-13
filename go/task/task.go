@@ -27,6 +27,7 @@ const RAND_STREET_ADDR = "MOX_RSA"
 const RAND_INT_100 = "MOX_RI_100"
 const RAND_INT_1000 = "MOX_RI_1000"
 const RAND_PHONE_555 = "MOX_P555"
+const RAND_STATE_CODE = "MOX_STATE"
 // Field
 const LIMIT = "limit"
 
@@ -81,6 +82,8 @@ func ProcessAction(action string) interface{} {
         val = datastore.RandInt(100)
     case RAND_INT_1000:
         val = datastore.RandInt(1000)
+    case RAND_STATE_CODE:
+        val = datastore.RandStateCode()
     }
     return val
 }
@@ -94,5 +97,6 @@ func Setup() {
         RAND_INT_100 : "",
         RAND_INT_1000 : "",
         RAND_PHONE_555 : "",
+        RAND_STATE_CODE : "",
     }
 }

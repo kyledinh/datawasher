@@ -1094,7 +1094,6 @@ Bly
 Blyskal
 Blyszczak
 Blythe
-Bmethods
 Bnrecad
 Bnrinfo
 Bnrlsi
@@ -1683,10 +1682,6 @@ Byrd
 Byrgesen
 Byrne
 Byrnes
-CHOCS
-COKOL
-CPM
-CSR
 Cabaniss
 Cabral
 Caceres
@@ -2201,9 +2196,6 @@ Clow
 Cluett
 Clusiau
 Clysdale
-Co
-Co-op
-Co-ordinator
 Coady
 Coallier
 Coathup
@@ -2636,12 +2628,6 @@ D'Silva
 D'Soto
 D'Souza
 D'lima
-DALE
-DDOCDB
-DMS
-DMSDB
-DPNBUILD
-DPP
 Da
 Da Gama
 Da Silva
@@ -3132,7 +3118,6 @@ Doble
 Dobransky
 Docherty
 Dockendorff
-Documentation-Grp
 Doczy
 Doda
 Dodd
@@ -3408,8 +3393,6 @@ Dziamba
 Dziawa
 Dziemian
 Dzioba
-ENG
-ETAS
 Eagles
 Eakes
 Eakins
@@ -3685,9 +3668,6 @@ Exner
 Eyers
 Ezekiel
 Ezzat
-FASTONE
-FISOPN
-FWPtools
 Fab
 Fabijanic
 Fabris
@@ -4084,7 +4064,7 @@ Frodsham
 Froehlich
 Froncek
 Frondozo
-Fronsee_Jr
+Fronsee
 Fross
 Frosst
 Froud
@@ -4123,7 +4103,6 @@ Furst
 Fusca
 Fuson
 Fussell
-Fwpco
 Fyfe
 Fysh
 Gabbai
@@ -4778,8 +4757,6 @@ Gyger
 Gylys
 Gysel
 Gyurcsak
-HDI
-HSI
 Haack
 Haaksman
 Haas
@@ -5559,15 +5536,6 @@ Hyrne
 Hysler
 Hyslop
 Hyte
-IBNTAS
-IC
-IEM
-INFO-MANAGEMENT
-INSP
-IOCNTRL
-IRCMARKET
-IRCMTL
-ITAC
 Iacoviello
 Iacovo
 Ianace
@@ -5581,8 +5549,6 @@ Ibarra
 Ibsen
 Iburg
 Ichizen
-Id
-Ide
 Ientile
 Iezzi
 Ifact
@@ -6605,9 +6571,7 @@ L'Anglais
 L'Ecuyer
 L'Heureux
 L'ecuyer-Demers
-LIBRARIAN
 LLoyd
-LRCRICH
 LaBauve
 LaBelle
 LaBonte
@@ -7253,7 +7217,6 @@ Loyst
 Loza
 Lozier
 Lozinski
-Lrcrtp
 Lu
 Luan
 Lucas
@@ -7327,18 +7290,12 @@ Lystad
 Lystiuk
 Lystuik
 Lytle
-MACKenzie
-MAINT
-MIC
-MMail
-MTL
 Maahs
 Maas
 Mabes
 Mabson
 Mabuchi
 Mac
-Mac Maid
 MacAdams
 MacArthur
 MacCarthy
@@ -8595,10 +8552,6 @@ Myrick
 Myrillas
 Myroon
 Mystkowski
-NCC
-NE-Region
-NTINASH
-NTPADMIN
 Nabors
 Nace
 Nadeau
@@ -8950,13 +8903,6 @@ O'Toole
 O'connor
 O'keefe
 OConnor
-OFCPARM
-OFCPARMS
-OPERATIONS
-OPS
-OPSPLNG
-OTTAWA
-OTTCO
 O_Kelly
 Oakley
 Oaks
@@ -9135,10 +9081,6 @@ Ozkan
 Ozmizrak
 Ozmore
 Ozyetis
-PATCOR
-PCBOARDS
-PCBTOOLS
-PKDCD
 Paar
 Pacey
 Pachal
@@ -9879,11 +9821,8 @@ Quintana
 Quintero
 Quintin
 Quinz
-Quizmaster
 Quon
 Qureshi
-RK
-RTP
 Raab
 Raaflaub
 Rabadi
@@ -10164,8 +10103,6 @@ Rezansoff
 Reznechek
 Reznick
 Rezzik
-Rfa
-Rff
 Rhattigan
 Rheault
 Rheaume
@@ -10491,15 +10428,6 @@ Rymkiewicz
 Rynders
 Rynties
 Rzepczynski
-SHOP
-SMith
-SOS
-SUPPORT
-SVM-BNRMTVA
-SVM-BNRMTVB
-SWR
-SYS
-SYSINT
 Saad
 Saatcioglu
 Sabadash
@@ -10718,7 +10646,6 @@ Schachtler
 Schack
 Schadan
 Schaefer
-SchaeferNTMVAA
 Schaefers
 Schafer
 Schaffel
@@ -10786,7 +10713,6 @@ Schmeler
 Schmelzel
 Schmidt
 Schmitigal
-SchmitigalNTMVAA
 Schmitt
 Schmitz
 Schmoe
@@ -10862,14 +10788,12 @@ Scotti
 Scourneau
 Scovell
 Scovill
-Scp
 Scrantom
 Scrbacic
 Screener
 Scribner
 Scrivens
 Scroger
-Scss
 Scssdev
 Scully
 Scurlock
@@ -11479,7 +11403,6 @@ Srikrishna
 Srinivasan
 Srivastava
 Sroczynski
-St
 St-Amour
 St-Denis
 St-Louis
@@ -11559,8 +11482,6 @@ Staten
 Statile
 Staton
 Stayton
-Stctest
-Stds
 Ste
 Ste-Marie
 Steckley
@@ -11829,8 +11750,6 @@ Szuminski
 Szura
 Szymanski
 Szypulski
-TAS
-TRIAL
 Ta
 Tabaja
 Tabalba
@@ -11935,14 +11854,11 @@ Tawfik
 Tay
 Taylor
 Taylor-Hudson
-Tchir
-Td
 Teacher
 Teague
 Teasley
 Tebbe
 Tebinka
-Technosoft
 Tecklenburg
 Teder
 Tedrick
@@ -11953,11 +11869,6 @@ Teichman
 Teitelbaum
 Tejada
 Tejani
-Tel
-Telco
-Telecom
-Telesis
-Telex
 Telfer
 Telidis
 Telke
@@ -11994,10 +11905,6 @@ TestNTMVAB
 Testa
 Testagc
 Tester
-Testing
-TestingPOSTTEST
-Testsds
-Testtools
 Tetrault
 Tetreault
 Teufel
@@ -12122,9 +12029,6 @@ Tiseo
 Titus
 Tiu
 Tiwari
-Tjia
-ToDo
-Toastmasters
 Tobias
 Tod
 Todaro
@@ -12186,7 +12090,6 @@ Torres
 Toscano
 Tosczak
 Toshach
-ToshachNTMVAA
 Tostenson
 Tota
 Totaro
@@ -12377,8 +12280,6 @@ Tyrrell
 Tyson
 Tzaneteas
 Tzuang
-US
-USER
 Uae
 Uberig
 Uchida
@@ -12433,8 +12334,6 @@ Usyk
 Utas
 Utsumi
 Uyar
-VMXA
-VO
 Vacher
 Vachon
 Vaculik
@@ -12610,7 +12509,6 @@ Verdonselli
 Verheyden
 Verhoeven
 Verhotz
-Verification
 Verkroost
 Verma
 Vermeesch
@@ -13185,8 +13083,6 @@ Wrigglesworth
 Wrigley
 Wrobel
 Wroblewski
-Wsadmin
-Wsbackup
 Wu
 Wueppelmann
 Wun
@@ -13211,10 +13107,6 @@ Xavier
 Xayaraj
 Xenos
 Xie
-Xmssupport
-Xpm
-Xpmbld
-Xpmbuilder
 Xu
 Yabe
 Yach
@@ -13449,7 +13341,6 @@ Zybala
 Zylstra
 Zywiel
 borozny
-cprs
 de Belen
 de Buda
 de CHABERT
@@ -13463,9 +13354,6 @@ de Witte
 deMontluzin
 deRosenroll
 deVette
-edmxtest
-fpsched
-livinston
 van Leeuwen
 van der
 von Ende
