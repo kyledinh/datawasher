@@ -67,6 +67,10 @@ func GetTest (num int) ([]model.Contact) {
 	return arr
 }
 
+func RandInt(limit int) int {
+	return rand.Intn(limit)
+}
+
 func RandState() string {
 	i := rand.Intn(len(States))
 	return States[i]

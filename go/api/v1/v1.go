@@ -42,12 +42,12 @@ func GetCreate(c *gin.Context) {
 
 	raw := `{ "root" : [`
 	for i := 0; i < settings.Limit; i++ {
-		raw = raw + `{ }`
+		raw += `{ }`
 		if  i+1 < settings.Limit {
-			raw = raw + ","
+			raw += `,`
 		}
 	}
-	raw = raw + `] }`
+	raw += `] }`
 
 	sj, err := simplejson.NewJson([]byte(raw))
 	if err != nil {
@@ -59,7 +59,7 @@ func GetCreate(c *gin.Context) {
 
 	for i := 0; i < settings.Limit; i++ {
 		for _, t := range tasks {
-			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action))
 		}
 		if settings.Email != "" {
 			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
@@ -67,7 +67,6 @@ func GetCreate(c *gin.Context) {
 			root.GetIndex(i).Set(settings.Email, datastore.MakeEmailAddress(fn, ln))
 		}
 	}
-
 	arr := root.MustArray()
 	c.JSON(200, arr)
 }
@@ -96,7 +95,7 @@ func PostWasher(c *gin.Context) {
 	root := sj.Get("root")
 	for i, _ := range root.MustArray() {
 		for _, t := range tasks {
-			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, ""))
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action))
 		}
 		if settings.Email != "" {
 			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
@@ -107,7 +106,6 @@ func PostWasher(c *gin.Context) {
 
 	arr := root.MustArray()
 	//log.Printf("... size of root array:  %v  ", len(arr))
-
 	c.JSON(200, arr)
 }
 

@@ -19,10 +19,15 @@ type Setting struct {
     Limit int
 }
 
+// Actions
+const MOX_EMAIL = "MOX_EMAIL"
 const RAND_FIRST_NAME = "MOX_RFN"
 const RAND_LAST_NAME = "MOX_RLN"
-const MOX_EMAIL = "MOX_EMAIL"
 const RAND_STREET_ADDR = "MOX_RSA"
+const RAND_INT_100 = "MOX_RI_100"
+const RAND_INT_1000 = "MOX_RI_1000"
+const RAND_PHONE_555 = "MOX_P555"
+// Field
 const LIMIT = "limit"
 
 var SupportedActions map[string]string
@@ -63,23 +68,31 @@ func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
     return tasks, setting
 }
 
-func ProcessAction(action string, str string) string {
+func ProcessAction(action string) interface{} {
+    var val interface{}
     switch action {
     case RAND_FIRST_NAME:
-        str = datastore.RandFirstName()
+        val = datastore.RandFirstName()
     case RAND_LAST_NAME:
-        str = datastore.RandLastName()
+        val = datastore.RandLastName()
     case RAND_STREET_ADDR:
-        str = datastore.RandStreetAddress()
+        val = datastore.RandStreetAddress()
+    case RAND_INT_100:
+        val = datastore.RandInt(100)
+    case RAND_INT_1000:
+        val = datastore.RandInt(1000)
     }
-    return str
+    return val
 }
 
 func Setup() {
     SupportedActions = map[string]string {
+        MOX_EMAIL : "",
         RAND_FIRST_NAME : "",
         RAND_LAST_NAME : "",
-        MOX_EMAIL : "",
         RAND_STREET_ADDR : "",
+        RAND_INT_100 : "",
+        RAND_INT_1000 : "",
+        RAND_PHONE_555 : "",
     }
 }

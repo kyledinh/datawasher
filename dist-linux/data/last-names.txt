@@ -6290,15 +6290,6 @@ Klein
 Kleppinger
 Kletchko
 Kleynenberg
-KleynenbergNTACFB
-KleynenbergNTMVAA
-KleynenbergNTMVAB
-KleynenbergNTNTCA
-KleynenbergNTNTCB
-KleynenbergNTNTIA
-KleynenbergNTNTIB
-KleynenbergNTRTPA
-KleynenbergNTRTPB
 Klimas
 Klimon
 Kline
