@@ -17,6 +17,7 @@ type Setting struct {
     Last_name string
     Email string
     Limit int
+    Sex string
 }
 
 // Actions
@@ -28,6 +29,7 @@ const RAND_INT_100 = "MOX_RI_100"
 const RAND_INT_1000 = "MOX_RI_1000"
 const RAND_PHONE_555 = "MOX_P555"
 const RAND_STATE_CODE = "MOX_STATE"
+const SEX_RAND_MF = "MOX_RSMF"
 // Field
 const LIMIT = "limit"
 
@@ -48,7 +50,6 @@ func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
     m := u.Query()
     for k, v := range m {
         log.Printf(" k: %v v: %v  ", k, v)
-
         if SupportedAction(k, v[0]) {
             task := Task{k, v[0]}
             tasks = append(tasks, task)
@@ -65,15 +66,16 @@ func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
         if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
         if t.Action == RAND_LAST_NAME { setting.Last_name = t.Field }
         if t.Action == MOX_EMAIL { setting.Email = t.Field }
+        if t.Action == SEX_RAND_MF { setting.Sex = t.Field }
     }
     return tasks, setting
 }
 
-func ProcessAction(action string) interface{} {
+func ProcessAction(action string, s Setting) interface{} {
     var val interface{}
     switch action {
     case RAND_FIRST_NAME:
-        val = datastore.RandFirstName()
+        val = datastore.RandFirstName(s.Sex)
     case RAND_LAST_NAME:
         val = datastore.RandLastName()
     case RAND_STREET_ADDR:
@@ -84,6 +86,8 @@ func ProcessAction(action string) interface{} {
         val = datastore.RandInt(1000)
     case RAND_STATE_CODE:
         val = datastore.RandStateCode()
+    case SEX_RAND_MF:
+        val = datastore.RandSexMF()
     }
     return val
 }
@@ -98,5 +102,6 @@ func Setup() {
         RAND_INT_1000 : "",
         RAND_PHONE_555 : "",
         RAND_STATE_CODE : "",
+        SEX_RAND_MF : "",
     }
 }

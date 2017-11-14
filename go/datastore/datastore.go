@@ -1,31 +1,37 @@
 package datastore
 
 import (
-	"bufio"
-	"encoding/csv"
-	"io"
-	"log"
+	//"log"
 	"math/rand"
-	"os"
 	"strconv"
 	"strings"
 	"time"
 	"github.com/kyledinh/datawasher/go/model"
-	"github.com/kyledinh/datawasher/go/cfg"
 )
 
 var Contacts []model.Contact
 var FirstNames []string
+var FemaleNames []string
+var MaleNames []string
 var LastNames []string
 var EmailDomains []string
 var States []string
 var StreetNames []string
 var StreetTypes []string
 
-func RandFirstName () string {
+func RandFirstName (sex string) string {
 	timeseed := time.Now().UnixNano()
 	rand.Seed(timeseed)
+	if (sex == "M") {
+		i := rand.Intn(len(MaleNames))
+		return MaleNames[i]
+	}
+	if (sex == "F") {
+		i := rand.Intn(len(FemaleNames))
+		return FemaleNames[i]
+	}
 	i := rand.Intn(len(FirstNames))
+
 	return FirstNames[i]
 }
 
@@ -88,44 +94,25 @@ func RandStreetAddress() string {
 	return streetNumber() + " " + StreetNames[i] + " " + StreetTypes[j]
 }
 
-func Setup() {
-	csvFile, _ := os.Open(cfg.CSV_FILE)
-	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var contacts []model.Contact
-	var count int64 = 0
-	for {
-		line, error := reader.Read()
-		if error == io.EOF {
-			break
-		} else if error != nil {
-			log.Fatal(error)
-		}
-		log.Printf(line[2])
+func RandPhoneNumber() string {
+	// TODO
+	return "415-555-0123"
+}
 
-		// SAMPLE CSV Entry
-		// First Name,Last Name,Email,Phone Number,Street Address,City,State,Lifecycle Stage,Main Contact
-		// Leslie,Knope,leslie.knope@cocaola.com,555-843-8116,68 Street Rd,Pawnee,IN,Lead,Phone
-		if (count > 0) { // Ignore first line in CSV that has headers
-			var c model.Contact
-
-			c.First_name	= line[0]
-			c.Last_name = line[1]
-			c.Email = line[2]
-			c.Phone_number = line[3]
-			c.Street_address = line[4]
-			c.City	= line[5]
-			c.State = line[6]
-
-			contacts = append(contacts, c)
-		}
-		count += 1
+func RandSexMF() string {
+	i := rand.Intn(100)
+	if i % 2 ==  0 {
+		return "M"
 	}
-	Contacts = contacts
-	log.Printf("... slurped CSV File with %v entries ...", count)
-	log.Printf("... number of records in Contacts %v", len(Contacts))
+	return "F"
+}
 
-	FirstNames = importFirstNames()
-	LastNames = importLastNames()
+func Setup() {
+	Contacts = importContactsFromCSV()
+	FirstNames = importNamesFromTxt("data/first-names.txt")
+	FemaleNames = importNamesFromTxt("data/female-names.txt")
+	MaleNames = importNamesFromTxt("data/male-names.txt")
+	LastNames = importNamesFromTxt("data/last-names.txt")
 	EmailDomains = importEmailDomains()
 	States = importStates()
 	StreetNames = importStreetNames()

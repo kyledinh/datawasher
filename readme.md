@@ -22,7 +22,11 @@ These endpoints will return JSON objects
 ```
 http://localhost:8000/random_contact
 http://localhost:8000/contacts
+
+http://localhost:8000/create?limit=10&first_name=MOX_RFN&last_name=MOX_RLN&email=MOX_EMAIL&addr=MOX_RSA&code=MOX_RI_1000&state=MOX_STATE&sex=MOX_RSMF
 ```
+The `create` endpoint will generate an array of where the you can name the fields and use generator via the query string.
+
 
 ### POST endpoints
 This endpoint will transform POST a JSON payload of contacts and return the same payload with transformed first_names.
@@ -48,8 +52,10 @@ See `testing/post-washer.sh` for a curl command to test the endpoint. This endpo
 | MOX_RLN        | Transforms with a random last name  |
 | MOX_EMAIL      | Used with MOX_RFN and MOX_RLN to generate an email address |
 | MOX_RSA        | Random street address like: 123 Elm Street |
-| MOX_RSC        | Random state code of 50 US states, ie: CA |
-| MOX_RP555      | Random phone number with `555`|
+| MOX_RI_100     | Random integer from 0-99 |
+| MOX_RI_1000    | Random integre from 0-999 |
+| MOX_STATE      | Random state code of 50 US states, ie: CA |
+| MOX_RSMF       | Random sex flag, connected with first name |
 
 
 ## Development

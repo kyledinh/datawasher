@@ -47,11 +47,15 @@ func GetCreate(c *gin.Context) {
 	}
 
 	root := sj.Get("root")
-	log.Printf("limit %v", settings.Limit)
+	log.Printf("setting %v", settings)
 
 	for i := 0; i < settings.Limit; i++ {
 		for _, t := range tasks {
-			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action))
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, settings))
+		}
+		if settings.Sex != "" {
+			s, _ := root.GetIndex(i).Get(settings.Sex).String()
+			root.GetIndex(i).Set(settings.First_name, datastore.RandFirstName(s))
 		}
 		if settings.Email != "" {
 			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
@@ -82,12 +86,17 @@ func PostWasher(c *gin.Context) {
 		c.JSON(400, gin.H{"message": sys.ERR_UNMARSHAL_BODY, "status": sys.FAIL})
 		return
 	}
+	log.Printf("... Settings:  %v  ", settings)
 
 	// process json payload with tasks packed in query string
 	root := sj.Get("root")
 	for i, _ := range root.MustArray() {
 		for _, t := range tasks {
-			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action))
+			root.GetIndex(i).Set(t.Field, task.ProcessAction(t.Action, settings))
+		}
+		if settings.Sex != "" {
+			s, _ := root.GetIndex(i).Get(settings.Sex).String()
+			root.GetIndex(i).Set(settings.First_name, datastore.RandFirstName(s))
 		}
 		if settings.Email != "" {
 			fn, _ := root.GetIndex(i).Get(settings.First_name).String()
@@ -95,7 +104,6 @@ func PostWasher(c *gin.Context) {
 			root.GetIndex(i).Set(settings.Email, datastore.MakeEmailAddress(fn, ln))
 		}
 	}
-
 	arr := root.MustArray()
 	//log.Printf("... size of root array:  %v  ", len(arr))
 	c.JSON(200, arr)
@@ -114,7 +122,7 @@ func PostWashJsonContacts(c *gin.Context) {
 	json.Unmarshal(rawbody, &arr)
 
 	for index := range arr {
-		arr[index].First_name = datastore.RandFirstName()
+		arr[index].First_name = datastore.RandFirstName("")
 		arr[index].Last_name = datastore.RandLastName()
 		arr[index].Email = datastore.MakeEmailAddress(arr[index].First_name, arr[index].Last_name)
 	}
