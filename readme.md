@@ -17,15 +17,22 @@ linux-docker-up.sh
 ```
 ## Using the datawasher services
 
-### GET endpoints
-These endpoints will return JSON objects
+### GET Create endpoint
+
+```
+http://localhost:8000/create?limit=10&first_name=MOX_RFN&last_name=MOX_RLN&email=MOX_EMAIL&addr=MOX_RSA&code=MOX_RI_1000&state=MOX_STATE&sex=MOX_RSMF
+```
+The `create` endpoint will generate an array of where the you can name the fields and use generator via the query string. In the example, the fields in the url param maps to the JSON fields created.
+
+<img src="https://raw.github.com/kyledinh/datawasher/master/assets/get-create.png" width="1200" />
+
+
+### Other GET endpoints
+These endpoints will return JSON objects. These contacts are predefined from the `data/contacts.csv` file.
 ```
 http://localhost:8000/random_contact
 http://localhost:8000/contacts
-
-http://localhost:8000/create?limit=10&first_name=MOX_RFN&last_name=MOX_RLN&email=MOX_EMAIL&addr=MOX_RSA&code=MOX_RI_1000&state=MOX_STATE&sex=MOX_RSMF
 ```
-The `create` endpoint will generate an array of where the you can name the fields and use generator via the query string.
 
 
 ### POST endpoints
