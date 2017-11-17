@@ -19,10 +19,10 @@ func Test_IsRawbodyArray(t *testing.T) {
 }
 
 func Test_WrapJsonAsRoot(t *testing.T) {
-    ar := []byte(`[{"first_name":"Dallas", "first_name":"Hobo"]`)
-    expected := []byte(`{"root" : [{"first_name":"Dallas", "first_name":"Hobo"]}`)
+    ar := []byte(`[{"first_name":"Dallas"}, {"first_name":"Hobo"}]`)
+    expected := []byte(`{ "root" : [{"first_name":"Dallas"}, {"first_name":"Hobo"}]}`)
 
     if (string(WrapJsonAsRoot(ar)) != string(expected)) {
-        t.Error("wrapped incorrect ", string(ar))
+        t.Error("wrapped incorrect ", string(WrapJsonAsRoot(ar)))
     }
 }

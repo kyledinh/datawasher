@@ -31,7 +31,6 @@ func RandFirstName (sex string) string {
 		return FemaleNames[i]
 	}
 	i := rand.Intn(len(FirstNames))
-
 	return FirstNames[i]
 }
 

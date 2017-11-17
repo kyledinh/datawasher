@@ -10,7 +10,7 @@ func IsRawbodyArray(ba []byte) bool {
 
 func WrapJsonAsRoot(js []byte) []byte {
     var b bytes.Buffer
-    b.Write([]byte(`{"root" : `))
+    b.Write([]byte(`{ "root" : `))
     b.Write(js)
     b.WriteString(`}`)
     return b.Bytes()

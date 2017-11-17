@@ -31,7 +31,7 @@ func importContactsFromCSV() []model.Contact {
 		if (count > 0) { // Ignore first line in CSV that has headers
 			var c model.Contact
 
-			c.First_name	= line[0]
+			c.First_name = line[0]
 			c.Last_name = line[1]
 			c.Email = line[2]
 			c.Phone_number = line[3]
@@ -43,7 +43,6 @@ func importContactsFromCSV() []model.Contact {
 		}
 		count += 1
 	}
-
 	log.Printf("... slurped CSV File with %v entries ...", count)
 	log.Printf("... number of records in Contacts %v", len(contacts))
 	return contacts
@@ -78,22 +77,20 @@ func importNamesFromTxt(filename string) []string {
 }
 
 func importStates() []string {
-	states := []string{ "AL","AK","AZ","AR","CA","CO","CT","DE",
+	return []string { "AL","AK","AZ","AR","CA","CO","CT","DE",
 		"FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
 		"MA","MI","MN","MS","MO","MT","NE","NV","NH","NM","NY","NC",
 		"ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
 		"VA","WA","WV","WI","WY",
 	}
-	return states
 }
 
 func importStreetNames() []string {
-	streets := []string{
+	return []string {
 		"Elm","Maple","Oak","Spruce","Birch","Forest","Park",
 		"Washington","Lincoln","Adams","Jefferson","Hayes",
 		"Main","Broad","Central","Market","Post",
 	}
-	return streets
 }
 
 func importStreetTypes() []string {
