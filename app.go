@@ -29,5 +29,9 @@ func main() {
 	// SERVICES
 	log.Printf("... started ServeFile ...")
 	log.Printf("... serving %v on port %v ", cfg.APPNAME, cfg.HTTP_PORT)
-	g.Run(portOption);
+	if cfg.HTTP_PORT == "443" {
+		g.RunTLS(portOption, "certs/cert.pem", "certs/key.pem");
+	} else {
+		g.Run(portOption)
+	}
 }
