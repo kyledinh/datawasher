@@ -1,6 +1,7 @@
 package task
 
 import (
+    "github.com/kyledinh/datawasher/go/cfg"
     "github.com/kyledinh/datawasher/go/datastore"
     "log"
     "net/url"
@@ -61,6 +62,10 @@ func GetTasksAndSettings(u *url.URL) ([]Task, Setting) {
             }
         }
 	}
+
+    if setting.Limit > cfg.LIMIT {
+        setting.Limit = cfg.LIMIT
+    }
 
     for _, t := range tasks {
         if t.Action == RAND_FIRST_NAME { setting.First_name = t.Field }
