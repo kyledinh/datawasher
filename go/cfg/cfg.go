@@ -16,11 +16,11 @@ var LIMIT int = 10000
 var conf JsonCfg
 
 type JsonCfg struct {
-	Appname     string
-	Http_port   string
-	Server      string
-	Csv_file 	string
-	Limit		int
+	Appname   string
+	Http_port string
+	Server    string
+	Csv_file  string
+	Limit     int
 }
 
 // ConfigFrom is a method to read json properties

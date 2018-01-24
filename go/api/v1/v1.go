@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"encoding/json"
 	"github.com/bitly/go-simplejson"
 	"github.com/gin-gonic/gin"
 	"github.com/kyledinh/datawasher/go/datastore"
@@ -8,7 +9,6 @@ import (
 	"github.com/kyledinh/datawasher/go/sys"
 	"github.com/kyledinh/datawasher/go/task"
 	"github.com/kyledinh/datawasher/go/util"
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -17,11 +17,11 @@ import (
 )
 
 func NotAvailableJson(c *gin.Context) {
-	c.JSON(401, gin.H{"message": "Required user authentication.", "status": sys.FAIL })
+	c.JSON(401, gin.H{"message": "Required user authentication.", "status": sys.FAIL})
 }
 
 func UsageJson(c *gin.Context) {
-	c.JSON(200, gin.H{"routes":"/washjson/"})
+	c.JSON(200, gin.H{"routes": "/washjson/"})
 }
 
 func GetRandomContact(c *gin.Context) {

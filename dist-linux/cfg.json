@@ -1,7 +1,7 @@
 {
    "appname" : "datawasher",
    "appversion" :  "0.0.1",
-   "http_port" : "8000",
+   "http_port" : "443",
    "server" : "0.0.0.0",
    "csv_file" : "data/contacts.csv",
    "limit" : 5000

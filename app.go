@@ -30,7 +30,7 @@ func main() {
 	log.Printf("... started ServeFile ...")
 	log.Printf("... serving %v on port %v, LIMIT set to %v", cfg.APPNAME, cfg.HTTP_PORT, cfg.LIMIT)
 	if cfg.HTTP_PORT == "443" {
-		g.RunTLS(portOption, "certs/cert.pem", "certs/key.pem");
+		g.RunTLS(portOption, "certs/cert.pem", "certs/key.pem")
 	} else {
 		g.Run(portOption)
 	}

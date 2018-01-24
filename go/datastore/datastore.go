@@ -2,11 +2,11 @@ package datastore
 
 import (
 	//"log"
+	"github.com/kyledinh/datawasher/go/model"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
-	"github.com/kyledinh/datawasher/go/model"
 )
 
 var Contacts []model.Contact
@@ -19,14 +19,14 @@ var States []string
 var StreetNames []string
 var StreetTypes []string
 
-func RandFirstName (sex string) string {
+func RandFirstName(sex string) string {
 	timeseed := time.Now().UnixNano()
 	rand.Seed(timeseed)
-	if (sex == "M") {
+	if sex == "M" {
 		i := rand.Intn(len(MaleNames))
 		return MaleNames[i]
 	}
-	if (sex == "F") {
+	if sex == "F" {
 		i := rand.Intn(len(FemaleNames))
 		return FemaleNames[i]
 	}
@@ -34,14 +34,14 @@ func RandFirstName (sex string) string {
 	return FirstNames[i]
 }
 
-func RandLastName () string {
+func RandLastName() string {
 	timeseed := time.Now().UnixNano()
 	rand.Seed(timeseed)
 	i := rand.Intn(len(LastNames))
 	return LastNames[i]
 }
 
-func MakeEmailAddress (first, last string) string {
+func MakeEmailAddress(first, last string) string {
 	user := "user"
 	first = strings.ToLower(first)
 	last = strings.ToLower(last)
@@ -62,8 +62,8 @@ func MakeEmailAddress (first, last string) string {
 	return user + "@" + EmailDomains[i]
 }
 
-func GetTest (num int) ([]model.Contact) {
-	if (num > len(Contacts)) {
+func GetTest(num int) []model.Contact {
+	if num > len(Contacts) {
 		num = len(Contacts)
 	}
 	var arr []model.Contact
@@ -100,7 +100,7 @@ func RandPhoneNumber() string {
 
 func RandSexMF() string {
 	i := rand.Intn(100)
-	if i % 2 ==  0 {
+	if i%2 == 0 {
 		return "M"
 	}
 	return "F"

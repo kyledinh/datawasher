@@ -1,10 +1,10 @@
 package datastore
 
 import (
-	"github.com/kyledinh/datawasher/go/cfg"
-	"github.com/kyledinh/datawasher/go/model"
 	"bufio"
 	"encoding/csv"
+	"github.com/kyledinh/datawasher/go/cfg"
+	"github.com/kyledinh/datawasher/go/model"
 	"io"
 	"log"
 	"os"
@@ -28,7 +28,7 @@ func importContactsFromCSV() []model.Contact {
 		// SAMPLE CSV Entry
 		// First Name,Last Name,Email,Phone Number,Street Address,City,State,Lifecycle Stage,Main Contact
 		// Leslie,Knope,leslie.knope@cocaola.com,555-843-8116,68 Street Rd,Pawnee,IN,Lead,Phone
-		if (count > 0) { // Ignore first line in CSV that has headers
+		if count > 0 { // Ignore first line in CSV that has headers
 			var c model.Contact
 
 			c.First_name = line[0]
@@ -36,7 +36,7 @@ func importContactsFromCSV() []model.Contact {
 			c.Email = line[2]
 			c.Phone_number = line[3]
 			c.Street_address = line[4]
-			c.City	= line[5]
+			c.City = line[5]
 			c.State = line[6]
 
 			contacts = append(contacts, c)
@@ -49,52 +49,60 @@ func importContactsFromCSV() []model.Contact {
 }
 
 func importEmailDomains() []string {
-    var arr []string
-    file, err := os.Open("data/domains.txt")
-	if err != nil { log.Fatal(err) }
+	var arr []string
+	file, err := os.Open("data/domains.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		arr = append(arr, scanner.Text())
 	}
-	if err := scanner.Err(); err != nil { log.Fatal(err) }
-    return arr
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return arr
 }
 
 func importNamesFromTxt(filename string) []string {
-    var names []string
-    file, err := os.Open(filename)
-	if err != nil { log.Fatal(err) }
+	var names []string
+	file, err := os.Open(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		names = append(names, strings.Title(scanner.Text()))
 	}
-	if err := scanner.Err(); err != nil { log.Fatal(err) }
-    return names
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
+	return names
 }
 
 func importStates() []string {
-	return []string { "AL","AK","AZ","AR","CA","CO","CT","DE",
-		"FL","GA","HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
-		"MA","MI","MN","MS","MO","MT","NE","NV","NH","NM","NY","NC",
-		"ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
-		"VA","WA","WV","WI","WY",
+	return []string{"AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE",
+		"FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
+		"MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NM", "NY", "NC",
+		"ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT",
+		"VA", "WA", "WV", "WI", "WY",
 	}
 }
 
 func importStreetNames() []string {
-	return []string {
-		"Elm","Maple","Oak","Spruce","Birch","Forest","Park",
-		"Washington","Lincoln","Adams","Jefferson","Hayes",
-		"Main","Broad","Central","Market","Post",
+	return []string{
+		"Elm", "Maple", "Oak", "Spruce", "Birch", "Forest", "Park",
+		"Washington", "Lincoln", "Adams", "Jefferson", "Hayes",
+		"Main", "Broad", "Central", "Market", "Post",
 	}
 }
 
 func importStreetTypes() []string {
-	return []string {
+	return []string{
 		"Ave", "Avenue", "St", "Street", "Blvd", "Alley", "Way", "Road",
 		"Dr", "Ct", "Court", "Pl", "Terrace", "Loop",
 	}
