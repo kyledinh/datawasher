@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+  "github.com/gin-contrib/cors"
 	"github.com/kyledinh/datawasher/go/api/v1"
 	"github.com/kyledinh/datawasher/go/cfg"
 	"github.com/kyledinh/datawasher/go/datastore"
@@ -16,22 +17,41 @@ func main() {
 	datastore.Setup()
 	portOption := ":" + cfg.HTTP_PORT
 
-	// ROUTES
-	g := gin.Default()
-	g.GET("/", v1.UsageJson)
-	g.GET("/random_contact", v1.GetRandomContact)
-	g.GET("/contacts", v1.GetContacts)
-	g.GET("/create", v1.GetCreate)
 
-	g.POST("/json_contacts", v1.PostWashJsonContacts)
-	g.POST("/washer", v1.PostWasher)
+	router := gin.Default()
+
+  	// router.Use(cors.New(cors.Config{
+    // AllowAllOrigins:  true,
+  	// AllowMethods:     []string{"GET", "POST"},
+  	// AllowHeaders:     []string{"Origin"},
+  	// ExposeHeaders:    []string{"Content-Length"},
+  	// AllowCredentials: true,
+  	// MaxAge: 12 * time.Hour,
+  	// }))
+
+  // CORS MIDDLEWARE
+  corsConfig := cors.DefaultConfig()
+  corsConfig.AllowAllOrigins = true
+  router.Use(cors.New(corsConfig))
+
+	// ROUTES
+	router.GET("/", v1.UsageJson)
+	router.GET("/random_contact", v1.GetRandomContact)
+	router.GET("/contacts", v1.GetContacts)
+	router.GET("/create", v1.GetCreate)
+
+	router.POST("/json_contacts", v1.PostWashJsonContacts)
+	router.POST("/washer", v1.PostWasher)
+
+
 
 	// SERVICES
 	log.Printf("... started ServeFile ...")
+  log.Printf("... using CORS allow all ...")
 	log.Printf("... serving %v on port %v, LIMIT set to %v", cfg.APPNAME, cfg.HTTP_PORT, cfg.LIMIT)
 	if cfg.HTTP_PORT == "443" {
-		g.RunTLS(portOption, "certs/cert.pem", "certs/key.pem")
+		router.RunTLS(portOption, "certs/cert.pem", "certs/key.pem")
 	} else {
-		g.Run(portOption)
+		router.Run(portOption)
 	}
 }
