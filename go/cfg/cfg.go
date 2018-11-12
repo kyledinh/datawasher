@@ -12,6 +12,7 @@ var HTTP_PORT string = "8000"
 var SERVER string = "0.0.0.0"
 var CSV_FILE string = "data/contacts.csv"
 var LIMIT int = 10000
+var VERSION string = "0.0"
 
 var conf JsonCfg
 
@@ -21,6 +22,7 @@ type JsonCfg struct {
 	Server    string
 	Csv_file  string
 	Limit     int
+  Appversion   string
 }
 
 // ConfigFrom is a method to read json properties
@@ -51,7 +53,9 @@ func Setup(path string) {
 		SERVER = conf.Server
 		CSV_FILE = conf.Csv_file
 		LIMIT = conf.Limit
+    VERSION = conf.Appversion
 		log.Printf("... loaded cfg.json ...")
 		log.Printf("CSV_FILE: %v", CSV_FILE)
+    log.Printf("Version: %v", VERSION)
 	}
 }
