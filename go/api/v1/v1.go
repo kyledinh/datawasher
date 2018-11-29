@@ -16,6 +16,11 @@ import (
 	"time"
 )
 
+func ReloadDatastore(c *gin.Context) {
+  datastore.Setup()
+	c.JSON(200, gin.H{"message": "Datastore reset."})
+}
+
 func NotAvailableJson(c *gin.Context) {
 	c.JSON(401, gin.H{"message": "Required user authentication.", "status": sys.FAIL})
 }

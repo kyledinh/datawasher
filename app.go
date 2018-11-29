@@ -38,6 +38,7 @@ func main() {
 	router.GET("/random_contact", v1.GetRandomContact)
 	router.GET("/contacts", v1.GetContacts)
 	router.GET("/create", v1.GetCreate)
+  router.GET("/reload", v1.ReloadtDatastore)
 
 	router.POST("/json_contacts", v1.PostWashJsonContacts)
 	router.POST("/washer", v1.PostWasher)
