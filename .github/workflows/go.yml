@@ -19,7 +19,7 @@ jobs:
         go-version: 1.16
 
     - name: Build
-      run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o dist-linux/datawasherLinux app.g
+      run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o dist-linux/datawasherLinux app.go
 
     - name: Test
       run: go test -v ./...
