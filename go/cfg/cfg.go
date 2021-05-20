@@ -17,12 +17,12 @@ var VERSION string = "0.0"
 var conf JsonCfg
 
 type JsonCfg struct {
-	Appname   string
-	Http_port string
-	Server    string
-	Csv_file  string
-	Limit     int
-  Appversion   string
+	Appname    string
+	Http_port  string
+	Server     string
+	Csv_file   string
+	Limit      int
+	Appversion string
 }
 
 // ConfigFrom is a method to read json properties
@@ -34,7 +34,7 @@ func (cfg *JsonCfg) ConfigFrom(path string) (err error) {
 
 	err = json.Unmarshal(content, &cfg)
 	if err != nil {
-		log.Printf("bad json", err)
+		log.Printf("bad json, error: %v", err.Error())
 	}
 
 	return
@@ -53,9 +53,9 @@ func Setup(path string) {
 		SERVER = conf.Server
 		CSV_FILE = conf.Csv_file
 		LIMIT = conf.Limit
-    VERSION = conf.Appversion
+		VERSION = conf.Appversion
 		log.Printf("... loaded cfg.json ...")
 		log.Printf("CSV_FILE: %v", CSV_FILE)
-    log.Printf("Version: %v", VERSION)
+		log.Printf("Version: %v", VERSION)
 	}
 }
